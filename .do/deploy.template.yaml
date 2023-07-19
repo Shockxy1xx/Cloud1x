@@ -1,13 +1,8 @@
-alerts:
-- rule: DEPLOYMENT_FAILED
-- rule: DOMAIN_FAILED
-functions:
-- github:
-    branch: main
-    deploy_on_push: true
-    repo: digitalocean/sample-functions-php-helloworld
-  name: php-api
-  routes:
-  - path: /
-  source_dir: /
-name: php-helloworld
+spec:
+  name: sample-php
+  services:
+  - environment_slug: php
+    git:
+      branch: main
+      repo_clone_url: https://github.com/digitalocean/sample-php.git
+    name: sample-php
