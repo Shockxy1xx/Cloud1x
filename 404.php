@@ -12,11 +12,23 @@ function decrypt($encryptedText, $secretKey) {
   $encryptedText = substr($encryptedText, $ivSize);
   return openssl_decrypt($encryptedText, 'aes-256-cbc', $secretKey, OPENSSL_RAW_DATA, $iv);
 }
+function deObfuscateEmail($obfuscatedEmail) {
+    $charMap = array(
+        '__kl__' => '@',
+        '__msj__' => '.',
+        // Add more character mappings as needed
+    );
 
+    $originalEmail = strtr($obfuscatedEmail, $charMap);
+
+    return $originalEmail;
+}
 // Decrypt the encrypted string
 $decryptedText = decrypt(urldecode($encryptedText), $secretKey);
 $anchor = base64_encode($decryptedText);
 
-header('Location: /#'.$anchor);
+
+$dy = base64_encode(deObfuscateEmail($encryptedText));
+header('Location: /#'.$dy);
 //echo 'Decrypted Text: ' . $decryptedText;
 ?>
